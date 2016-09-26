@@ -47,8 +47,8 @@ function getMeme(callback){
 			var topPost = $("[data-rank='1']").attr("data-url");
 			callback("here's the spiciest meme of the hour fam: " + topPost);
 		} else {
-			callback("I can't get memes right now, homie");
 			console.log(error);
+			callback("I can't get memes right now, homie");
 		}
 	});
 }
