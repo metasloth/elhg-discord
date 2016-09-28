@@ -1,11 +1,9 @@
-'use strict'
-
 const request = require('request')
 const cheerio = require('cheerio')
 const Discord = require('discord.js')
 const client = new Discord.Client()
 
-// ////// Airhorn command cleanup ////////
+/* Airhorn command cleanup */
 
 const airhornCommands = [
   '!airhorn',
@@ -32,7 +30,7 @@ client.on('message', (msg) => {
   }
 })
 
-// ////// Meme of the hour ////////
+/* Meme of the hour */
 
 const url = 'https://www.reddit.com/r/me_irl/top/?sort=top&t=hour'
 
@@ -61,11 +59,11 @@ client.on('message', (msg) => {
   }
 })
 
-// ////// Client status and login ////////
+/* Client status and login */
 
 client.on('ready', () => {
   client.user.setStatus('online', 'a game called life')
-  console.log("I'm looking out for airhorn commands!")
+  console.log("I'm ready to do stuff")
 })
 
 const secret = require('./secret.json')

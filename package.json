@@ -2,9 +2,9 @@
   "name": "elgh-discord",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start" : "node index.js"
+    "start" : "node main.js"
   },
   "repository": {
     "type": "git",
@@ -16,9 +16,5 @@
     "request" : "latest",
     "cheerio" : "latest"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/metasloth/elgh-discord/issues"
-  },
-  "homepage": "https://github.com/metasloth/elgh-discord#readme"
+  "license": "MIT"
 }
