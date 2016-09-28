@@ -39,14 +39,34 @@ function getMeme (callback) {
     if (!error) {
       let $ = cheerio.load(body)
       let topPost = $("[data-rank='1']").attr('data-url')
-      // Make sure imgur links are direct
+      // Make sure imgur links are direct 
       if (topPost.search('imgur') > -1 && !topPost.substring(topPost.length - 5, topPost.length).includes('.')) {
-        topPost += '.jpg'
+        getImgurDirectLink(topPost, function (directLink) {
+          topPost = directLink
+          callback("here's the spiciest meme of the hour fam: " + topPost)
+        })
+      } else {
+        callback("here's the spiciest meme of the hour fam: " + topPost)
       }
-      callback("here's the spiciest meme of the hour fam: " + topPost)
     } else {
       console.log(error)
       callback("I can't get memes right now, homie")
+    }
+  })
+}
+
+function getImgurDirectLink (albulmLink, callback) {
+  request(albulmLink, function (error, response, body) {
+    if (!error) {
+      let $ = cheerio.load(body)
+      let directLink = $("[itemprop='embedURL']").attr('content')
+      if (directLink == null) {
+        directLink = 'https:' + $("[class='post-image']").children("img").attr('src')
+      }
+      callback(directLink)
+    } else {
+      console.log(error)
+      callback("psych! something went horribly wrong")
     }
   })
 }
