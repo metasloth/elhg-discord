@@ -42,7 +42,8 @@ function getMeme (callback) {
       // Make sure imgur single image links are direct 
       if (topPost.search('imgur') > -1
         && !topPost.substring(topPost.length - 5, topPost.length).includes('.')
-        && topPost.search('/gallery/' == -1)) {
+        && topPost.search('/gallery/' == -1)
+        && topPost.search('/a/') == -1) {
         request(topPost, function (error, response, body) {
           if (!error) {
             // look for a gifv url, otherwise append .jpg to the link
