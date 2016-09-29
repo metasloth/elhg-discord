@@ -23,10 +23,10 @@ const airhornCommands = [
   '!wtc'
 ]
 
-client.on('message', (msg) => {
+client.on('message', msg => {
   if (airhornCommands.indexOf(msg.content) > -1) {
     msg.delete(2000)
-    console.log(Date() + ' Caught Commmand: ' + msg.content)
+    console.log(new Date().toLocaleTimeString() + ` Caught Commmand: ${msg.content} from ${msg.author.username}`)
   }
 })
 
@@ -39,42 +39,38 @@ function getMeme (callback) {
     if (!error) {
       let $ = cheerio.load(body)
       let topPost = $("[data-rank='1']").attr('data-url')
-      // Make sure imgur links are direct 
-      if (topPost.search('imgur') > -1 && !topPost.substring(topPost.length - 5, topPost.length).includes('.')) {
-        getImgurDirectLink(topPost, function (directLink) {
-          topPost = directLink
-          callback("here's the spiciest meme of the hour fam: " + topPost)
+      // Make sure imgur single image links are direct 
+      if (topPost.search('imgur') > -1
+        && !topPost.substring(topPost.length - 5, topPost.length).includes('.')
+        && topPost.search('/gallery/' == -1)) {
+        request(topPost, function (error, response, body) {
+          if (!error) {
+            // look for a gifv url, otherwise append .jpg to the link
+            let $ = cheerio.load(body)
+            let gifv = $("[itemprop='embedURL']").attr('content')
+            topPost = (gifv != null) ? gifv : (topPost + '.jpg')
+            callback("here's the spiciest meme of the hour fam: " + topPost)
+          } else {
+            // when the imgur request fails use the link as is
+            callback("here's the spiciest meme of the hour fam: " + topPost)
+            console.log(error)
+          }
         })
       } else {
         callback("here's the spiciest meme of the hour fam: " + topPost)
       }
     } else {
+      callback("I can't get memes right now, homie.")
       console.log(error)
-      callback("I can't get memes right now, homie")
     }
   })
 }
 
-function getImgurDirectLink (albulmLink, callback) {
-  request(albulmLink, function (error, response, body) {
-    if (!error) {
-      let $ = cheerio.load(body)
-      let directLink = $("[itemprop='embedURL']").attr('content')
-      if (directLink == null) {
-        directLink = 'https:' + $("[class='post-image']").children("img").attr('src')
-      }
-      callback(directLink)
-    } else {
-      console.log(error)
-      callback("psych! something went horribly wrong")
-    }
-  })
-}
-
-client.on('message', (msg) => {
+client.on('message', msg => {
   if (msg.content == '!meme') {
-    getMeme(function (reply) {
-      msg.reply(reply)
+    getMeme(link => {
+      msg.reply(link)
+      console.log(new Date().toLocaleTimeString() + ` Replied to ${msg.author.username}, "${link}"`)
     })
   }
 })
@@ -82,8 +78,8 @@ client.on('message', (msg) => {
 /* Client status and login */
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'a game called life')
-  console.log("I'm ready to do stuff")
+  client.user.setStatus('online', "metasloth's jQuery sucks")
+  console.log("I'm ready to do bot stuff")
 })
 
 const secret = require('./secret.json')
