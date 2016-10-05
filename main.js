@@ -79,7 +79,7 @@ client.on('message', msg => {
 /* Client status and login */
 
 client.on('ready', () => {
-  client.user.setStatus('online', "metasloth's jQuery sucks")
+  client.user.setStatus('online', "Half-Life 3")
   console.log("I'm ready to do bot stuff")
 })
 
