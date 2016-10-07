@@ -67,7 +67,7 @@ client.on('message', msg => {
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'Testing GTFO')
+  client.user.setStatus('online', 'Halo 6')
   console.log("I'm ready to do bot stuff")
 })
 
