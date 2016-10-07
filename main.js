@@ -3,8 +3,6 @@ const cheerio = require('cheerio')
 const Discord = require('discord.js')
 const client = new Discord.Client()
 
-/* Airhorn command cleanup */
-
 const airhornCommands = [
   '!airhorn',
   '!anotha',
@@ -23,63 +21,53 @@ const airhornCommands = [
   '!wtc'
 ]
 
+const url = 'https://www.reddit.com/r/me_irl/top/?sort=top&t=hour'
+
+const getMeme = new Promise((resolve, reject) => request(url, (error, response, body) => {
+  if (error) {
+    reject()
+    console.log(error)
+  } else {
+    let $ = cheerio.load(body)
+    let topPost = $("[data-rank='1']").attr('data-url')
+    // Make sure imgur single image links are direct 
+    if (topPost.includes('imgur') && !topPost.includes('.', topPost.length - 5)
+      && !topPost.includes('/gallery/') && !topPost.includes('/a/')) {
+      request(topPost, (error, response, body) => {
+        // if the imgur request fails return the link as is
+        if (error) {
+          resolve(topPost)
+          console.log(error)
+        } else {
+          // look for a gifv url, otherwise append .jpg to the link
+          let $ = cheerio.load(body)
+          let gifv = $("[itemprop='embedURL']").attr('content')
+          topPost = (gifv != null) ? gifv : (topPost + '.jpg')
+          resolve(topPost)
+        }
+      })
+    } else {
+      resolve(topPost)
+    }
+  }
+}))
+
 client.on('message', msg => {
   if (airhornCommands.indexOf(msg.content) > -1) {
     msg.delete(2000)
     console.log(new Date().toLocaleTimeString() + ` Caught Commmand: ${msg.content} from ${msg.author.username}`)
-  }
-})
-
-/* Meme of the hour */
-
-const url = 'https://www.reddit.com/r/me_irl/top/?sort=top&t=hour'
-
-function getMeme (callback) {
-  request(url, function (error, response, body) {
-    if (!error) {
-      let $ = cheerio.load(body)
-      let topPost = $("[data-rank='1']").attr('data-url')
-      // Make sure imgur single image links are direct 
-      if (topPost.search('imgur') > -1
-        && !topPost.substring(topPost.length - 5, topPost.length).includes('.')
-        && topPost.search('/gallery/' == -1)
-        && topPost.search('/a/') == -1) {
-        request(topPost, function (error, response, body) {
-          if (!error) {
-            // look for a gifv url, otherwise append .jpg to the link
-            let $ = cheerio.load(body)
-            let gifv = $("[itemprop='embedURL']").attr('content')
-            topPost = (gifv != null) ? gifv : (topPost + '.jpg')
-            callback("here's the spiciest meme of the hour fam: " + topPost)
-          } else {
-            // when the imgur request fails use the link as is
-            callback("here's the spiciest meme of the hour fam: " + topPost)
-            console.log(error)
-          }
-        })
-      } else {
-        callback("here's the spiciest meme of the hour fam: " + topPost)
-      }
-    } else {
-      callback("I can't get memes right now, homie.")
-      console.log(error)
-    }
-  })
-}
-
-client.on('message', msg => {
-  if (msg.content == '!meme') {
-    getMeme(link => {
-      msg.reply(link)
-      console.log(new Date().toLocaleTimeString() + ` Replied to ${msg.author.username}, "${link}"`)
+  } else if (msg.content == '!meme') {
+    getMeme.then(response => {
+      msg.reply("here's the spiciest meme of the hour fam: " + response)
+      console.log(new Date().toLocaleTimeString() + ` Sent "${response}" to ${msg.author.username}`)
+    }, error => {
+      msg.reply("I can't get memes right now homie")
     })
   }
 })
 
-/* Client status and login */
-
 client.on('ready', () => {
-  client.user.setStatus('online', "Half-Life 3")
+  client.user.setStatus('online', 'Testing GTFO')
   console.log("I'm ready to do bot stuff")
 })
 
