@@ -38,6 +38,3 @@ jspm_packages
 
 # Secret
 secret.json
-
-# Other
-sandbox.js

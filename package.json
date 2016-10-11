@@ -1,7 +1,6 @@
 {
   "name": "elgh-discord",
   "version": "1.0.0",
-  "description": "",
   "main": "main.js",
   "scripts": {
     "start" : "node ./src/main.js"
@@ -12,9 +11,9 @@
   },
   "author": "metasloth",
   "dependencies": {
-    "discord.js" : "latest",
-    "request" : "latest",
-    "cheerio" : "latest"
+    "discord.js" : "9.3.0",
+    "request" : "2.75.0",
+    "cheerio" : "0.22.0"
   },
   "license": "MIT"
 }

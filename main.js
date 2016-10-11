@@ -70,11 +70,12 @@ client.on('message', msg => {
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'to win')
+  client.user.setStatus('online', 'CS:NO')
   console.log("I'm ready to do bot stuff")
 })
 
-client.on('disconnected', () => console.log(new Date().toLocaleTimeString() + ' Disconnected!')
-)
+client.on('disconnected', () => {
+  console.log(new Date().toLocaleTimeString() + ' Disconnected!')
+})
 
 client.login(secret.token)
