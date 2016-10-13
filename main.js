@@ -56,21 +56,21 @@ function getMeme () {
 }
 
 client.on('message', msg => {
-  if (airhornCommands.indexOf(msg.content) > -1) {
-    msg.delete(2000)
-    console.log(new Date().toLocaleTimeString() + ` Caught Commmand: ${msg.content} from ${msg.author.username}`)
-  } else if (msg.content == '!meme') {
+  if (msg.content.toLowerCase() === '!meme') {
     getMeme().then(response => {
       msg.reply("here's the spiciest meme of the hour fam: " + response)
       console.log(new Date().toLocaleTimeString() + ` Sent "${response}" to ${msg.author.username}`)
     }, error => {
       msg.reply("I can't get memes right now homie")
     })
+  } else if (airhornCommands.indexOf(msg.content.toLowerCase()) > -1) {
+    msg.delete(2000)
+    console.log(new Date().toLocaleTimeString() + ` Caught Commmand: ${msg.content} from ${msg.author.username}`)
   }
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'CS:NO')
+  client.user.setStatus('online', 'Werewolf Bar Mitzvah')
   console.log("I'm ready to do bot stuff")
 })
 
