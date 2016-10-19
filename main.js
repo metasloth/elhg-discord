@@ -70,8 +70,8 @@ client.on('message', msg => {
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'Werewolf Bar Mitzvah')
-  console.log("I'm ready to do bot stuff")
+  client.user.setStatus('online', 'games on linux kappa')
+  console.log(new Date().toLocaleTimeString() + " bot_irl is ready to meme!")
 })
 
 client.on('disconnected', () => {
