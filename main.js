@@ -1,11 +1,9 @@
 const request = require('request')
 const cheerio = require('cheerio')
 const Discord = require('discord.js')
-const client = new Discord.Client()
 const secret = require('./secret.json')
 
-let botlog
-let staleMemes = []
+const client = new Discord.Client()
 const airhornCommands = [
   '!airhorn',
   '!anotha',
@@ -23,6 +21,9 @@ const airhornCommands = [
   '!wowthatscool',
   '!wtc'
 ]
+
+let botlog
+let staleMemes = []
 
 function getMeme () {
   let promise = new Promise((resolve, reject) => {
@@ -66,7 +67,7 @@ function getMeme () {
 client.on('message', msg => {
   if (msg.content.toLowerCase() === '!meme') {
     getMeme().then(response => {
-      msg.reply("here's the spiciest meme of the hour fam: " + response)
+      msg.channel.sendMessage("`here's a spicy meme, bleep bloop: `" + response)
       botlog.sendMessage(` Sent "${response}" to ${msg.author.username}`)
     }, error => {
       msg.reply("I can't get memes right now homie")
@@ -78,7 +79,7 @@ client.on('message', msg => {
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'games on linux kappa')
+  client.user.setStatus('online', 'up in the clouds')
   console.log(new Date() + ': bot_irl is ready to meme!')
   botlog = client.channels.find('id', secret.botLogChannel)
 })
