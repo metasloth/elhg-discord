@@ -1,4 +1,27 @@
 {
+  "airhornCommands": [
+    "!airhorn",
+    "!anotha",
+    "!anothaone",
+    "!johncena",
+    "!cena",
+    "!ethan",
+    "!eb",
+    "!ethanbradberry",
+    "!h3h3",
+    "!stan",
+    "!stanislav",
+    "!birthday",
+    "!bday",
+    "!wowthatscool",
+    "!wtc"
+  ],
+  "replies": [
+    "`here is a spicy meme, bleep bloop:` ",
+    "`༼ つ ◕_◕ ༽つ  TAKE MY MEME ༼ つ ◕_◕ ༽つ` ",
+    "`🤖❤️` ",
+    "`I gotchu fam:` "
+  ],
   "subreddits": [
     {
       "url": "me_irl",
@@ -20,22 +43,5 @@
       "url": "BikiniBottomTwitter",
       "weight": "3"
     }
-  ],
-  "airhornCommands": [
-    "!airhorn",
-    "!anotha",
-    "!anothaone",
-    "!johncena",
-    "!cena",
-    "!ethan",
-    "!eb",
-    "!ethanbradberry",
-    "!h3h3",
-    "!stan",
-    "!stanislav",
-    "!birthday",
-    "!bday",
-    "!wowthatscool",
-    "!wtc"
   ]
 }

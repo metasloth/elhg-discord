@@ -20,6 +20,7 @@ function getMeme () {
   let url = 'https://www.reddit.com/r/'
     + weightedSubs[Math.floor(Math.random() * weightedSubs.length)]
     + '/top/?sort=top&t=hour'
+  
   let promise = new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (error) {
@@ -61,13 +62,16 @@ function getMeme () {
 
 client.on('message', msg => {
   // Return a meme
-  if (msg.content.toLowerCase() === '!meme') {
+  if (msg.content.toLowerCase() === '!test') {
+    msg.channel.startTyping()
     getMeme().then(response => {
-      msg.channel.sendMessage("`here's a spicy meme, bleep bloop:` " + response)
+      let text = config.replies[Math.floor(Math.random() * config.replies.length)]
+      msg.channel.sendMessage(text + response)
       botlog.sendMessage(` Sent "${response}" to ${msg.author.username}`)
     }, error => {
       msg.reply("I can't get memes right now homie")
     })
+    msg.channel.stopTyping()
   }
   // Delete airhorn commands 
   else if (config.airhornCommands.indexOf(msg.content.toLowerCase()) > -1) {
