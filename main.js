@@ -5,7 +5,6 @@ const secret = require('./secret.json')
 const config = require('./config.json')
 
 const client = new Discord.Client()
-const url = 'https://www.reddit.com/r/2meirl4meirl+TooMeIrlForMeIrl+me_irl+meirl/top/?sort=top&t=hour'
 
 let botlog
 let staleMemes = []
@@ -42,8 +41,9 @@ function getMeme () {
             if (error) {
               resolve(meme)
               console.log(error)
-            } else {
-              // Look for a gifv url, otherwise append .jpg to the link
+            }
+            // Look for a gifv url, otherwise append .jpg to the link 
+            else {
               let $ = cheerio.load(body)
               let gifv = $("[itemprop='embedURL']").attr('content')
               meme = (gifv != null) ? gifv : (meme + '.jpg')
