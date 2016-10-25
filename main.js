@@ -2,32 +2,27 @@ const request = require('request')
 const cheerio = require('cheerio')
 const Discord = require('discord.js')
 const secret = require('./secret.json')
+const config = require('./config.json')
 
 const client = new Discord.Client()
-const airhornCommands = [
-  '!airhorn',
-  '!anotha',
-  '!anothaone',
-  '!johncena',
-  '!cena',
-  '!ethan',
-  '!eb',
-  '!ethanbradberry',
-  '!h3h3',
-  '!stan',
-  '!stanislav',
-  '!birthday',
-  '!bday',
-  '!wowthatscool',
-  '!wtc'
-]
+const url = 'https://www.reddit.com/r/2meirl4meirl+TooMeIrlForMeIrl+me_irl+meirl/top/?sort=top&t=hour'
 
 let botlog
 let staleMemes = []
+let weightedSubs = []
+
+for (let i = 0; i < config.subreddits.length; ++i) {
+  for (let j = 0; j < config.subreddits[i].weight; ++j) {
+    weightedSubs.push(config.subreddits[i].url)
+  }
+}
 
 function getMeme () {
+  let url = 'https://www.reddit.com/r/'
+    + weightedSubs[Math.floor(Math.random() * weightedSubs.length)]
+    + '/top/?sort=top&t=hour'
   let promise = new Promise((resolve, reject) => {
-    request('https://www.reddit.com/r/me_irl/top/?sort=top&t=hour', (error, response, body) => {
+    request(url, (error, response, body) => {
       if (error) {
         reject()
         console.log(error)
@@ -65,14 +60,17 @@ function getMeme () {
 }
 
 client.on('message', msg => {
+  // Return a meme
   if (msg.content.toLowerCase() === '!meme') {
     getMeme().then(response => {
-      msg.channel.sendMessage("`here's a spicy meme, bleep bloop: `" + response)
+      msg.channel.sendMessage("`here's a spicy meme, bleep bloop:` " + response)
       botlog.sendMessage(` Sent "${response}" to ${msg.author.username}`)
     }, error => {
       msg.reply("I can't get memes right now homie")
     })
-  } else if (airhornCommands.indexOf(msg.content.toLowerCase()) > -1) {
+  }
+  // Delete airhorn commands 
+  else if (config.airhornCommands.indexOf(msg.content.toLowerCase()) > -1) {
     msg.delete(2000)
     botlog.sendMessage(`Removed commmand "${msg.content}" from ${msg.author.username}`)
   }

@@ -1,0 +1,41 @@
+{
+  "subreddits": [
+    {
+      "url": "me_irl",
+      "weight": "5"
+    },
+    {
+      "url": "meirl",
+      "weight": "5"
+    },
+    {
+      "url": "toomeirlformeirl",
+      "weight": "2"
+    },
+    {
+      "url": "2meirl4meirl",
+      "weight": "2"
+    },
+    {
+      "url": "BikiniBottomTwitter",
+      "weight": "3"
+    }
+  ],
+  "airhornCommands": [
+    "!airhorn",
+    "!anotha",
+    "!anothaone",
+    "!johncena",
+    "!cena",
+    "!ethan",
+    "!eb",
+    "!ethanbradberry",
+    "!h3h3",
+    "!stan",
+    "!stanislav",
+    "!birthday",
+    "!bday",
+    "!wowthatscool",
+    "!wtc"
+  ]
+}
