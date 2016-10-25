@@ -62,7 +62,7 @@ function getMeme () {
 
 client.on('message', msg => {
   // Return a meme
-  if (msg.content.toLowerCase() === '!test') {
+  if (msg.content.toLowerCase() === '!meme') {
     msg.channel.startTyping()
     getMeme().then(response => {
       let text = config.replies[Math.floor(Math.random() * config.replies.length)]
