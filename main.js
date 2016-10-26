@@ -20,7 +20,6 @@ function getMeme () {
   let url = 'https://www.reddit.com/r/'
     + weightedSubs[Math.floor(Math.random() * weightedSubs.length)]
     + '/top/?sort=top&t=hour'
-  
   let promise = new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (error) {
@@ -90,7 +89,7 @@ client.on('disconnect', () => {
   console.log(new Date() + ': Disconnected!')
 })
 
-client.on('error', (error) => {
+client.on('error', error => {
   console.log(new Date() + error)
 })
 
