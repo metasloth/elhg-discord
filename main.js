@@ -73,14 +73,14 @@ client.on('message', msg => {
     msg.channel.stopTyping()
   }
   // Delete airhorn commands 
-  else if (config.airhornCommands.indexOf(msg.content.toLowerCase()) > -1) {
-    msg.delete(2000)
+  else if (config.deleteKeywords.indexOf(msg.content.toLowerCase()) > -1) {
+    msg.delete()
     botlog.sendMessage(`Removed commmand "${msg.content}" from ${msg.author.username}`)
   }
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'up in the clouds')
+  client.user.setStatus('online', 'keep it spoopy')
   console.log(new Date() + ': bot_irl is ready to meme!')
   botlog = client.channels.find('id', secret.botLogChannel)
 })
