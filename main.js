@@ -68,7 +68,7 @@ client.on('message', msg => {
       msg.channel.sendMessage(text + response)
       botlog.sendMessage(` Sent "${response}" to ${msg.author.username}`)
     }, error => {
-      msg.reply("I can't get memes right now homie")
+      msg.reply("༼ つ ಥ_ಥ ༽つ ...I can't get memes right now homie")
     })
     msg.channel.stopTyping()
   }
@@ -80,7 +80,7 @@ client.on('message', msg => {
 })
 
 client.on('ready', () => {
-  client.user.setStatus('online', 'keep it spoopy')
+  client.user.setStatus('online', config.status)
   console.log(new Date() + ': bot_irl is ready to meme!')
   botlog = client.channels.find('id', secret.botLogChannel)
 })
