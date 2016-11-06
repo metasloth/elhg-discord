@@ -28,6 +28,7 @@ function getMeme () {
       } else {
         let $ = cheerio.load(body)
         let meme = $("[data-rank='1']").attr('data-url')
+        if (meme == null) reject()
         // Check for unique post
         for (let i = 2; staleMemes.indexOf(meme) > -1; i++) {
           meme = $("[data-rank='" + i + "']").attr('data-url')
