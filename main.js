@@ -26,7 +26,6 @@ function getMeme () {
       } else {
         let $ = cheerio.load(body)
         let meme = $("[data-rank='1']").attr('data-url')
-        meme = null
         if (meme == null) {
           reject()
           botlog.sendMessage(`Url: ${url} had no posts`)
