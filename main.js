@@ -17,9 +17,7 @@ for (let i = 0; i < config.subreddits.length; ++i) {
 }
 
 function getMeme () {
-  let url = 'https://www.reddit.com/r/'
-    + weightedSubs[Math.floor(Math.random() * weightedSubs.length)]
-    + '/top/?sort=top&t=hour'
+  let url = weightedSubs[Math.floor(Math.random() * weightedSubs.length)]
   let promise = new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (error) {
@@ -28,31 +26,36 @@ function getMeme () {
       } else {
         let $ = cheerio.load(body)
         let meme = $("[data-rank='1']").attr('data-url')
-        if (meme == null) reject()
-        // Check for unique post
-        for (let i = 2; staleMemes.indexOf(meme) > -1; i++) {
-          meme = $("[data-rank='" + i + "']").attr('data-url')
-        }
-        staleMemes.push(meme)
-        // Make sure imgur single image links are direct 
-        if (meme.includes('imgur') && !meme.includes('.', meme.length - 5)
-          && !meme.includes('/gallery/') && !meme.includes('/a/')) {
-          request(meme, (error, response, body) => {
-            // If the imgur request fails return the link as is
-            if (error) {
-              resolve(meme)
-              console.log(error)
-            }
-            // Look for a gifv url, otherwise append .jpg to the link 
-            else {
-              let $ = cheerio.load(body)
-              let gifv = $("[itemprop='embedURL']").attr('content')
-              meme = (gifv != null) ? gifv : (meme + '.jpg')
-              resolve(meme)
-            }
-          })
+        meme = null
+        if (meme == null) {
+          reject()
+          botlog.sendMessage(`Url: ${url} had no posts`)
         } else {
-          resolve(meme)
+          // Check for unique post
+          for (let i = 2; staleMemes.indexOf(meme) > -1; i++) {
+            meme = $("[data-rank='" + i + "']").attr('data-url')
+          }
+          staleMemes.push(meme)
+          // Make sure imgur single image links are direct 
+          if (meme.includes('imgur') && !meme.includes('.', meme.length - 5)
+            && !meme.includes('/gallery/') && !meme.includes('/a/')) {
+            request(meme, (error, response, body) => {
+              // If the imgur request fails return the link as is
+              if (error) {
+                resolve(meme)
+                console.log(error)
+              }
+              // Look for a gifv url, otherwise append .jpg to the link 
+              else {
+                let $ = cheerio.load(body)
+                let gifv = $("[itemprop='embedURL']").attr('content')
+                meme = (gifv != null) ? gifv : (meme + '.jpg')
+                resolve(meme)
+              }
+            })
+          } else {
+            resolve(meme)
+          }
         }
       }
     })
@@ -69,7 +72,7 @@ client.on('message', msg => {
       msg.channel.sendMessage(text + response)
       botlog.sendMessage(` Sent "${response}" to ${msg.author.username}`)
     }, error => {
-      msg.reply("༼ つ ಥ_ಥ ༽つ ...I can't get memes right now homie")
+      msg.channel.sendMessage("`Sorry, I couldn't get a meme for you ༼ つ ಥ_ಥ ༽つ`")
     })
     msg.channel.stopTyping()
   }

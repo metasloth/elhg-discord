@@ -25,12 +25,16 @@
   "status":"h4ck3d by S0MBRA",
   "subreddits": [
     {
-      "url": "me_irl",
-      "weight": "5"
+      "url": "https://www.reddit.com/r/me_irl/top/?sort=top&t=hour",
+      "weight": "6"
     },
     {
-      "url": "BikiniBottomTwitter",
-      "weight": "3"
+      "url": "https://www.reddit.com/r/BikiniBottomTwitter/top/?sort=top&t=hour",
+      "weight": "2"
+    },
+    {
+      "url": "https://www.reddit.com/r/trippingthroughtime",
+      "weight": "2"
     }
   ]
 }
