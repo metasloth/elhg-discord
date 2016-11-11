@@ -39,3 +39,4 @@ jspm_packages
 # Secret
 secret.json
 sandbox.js
+log.json
