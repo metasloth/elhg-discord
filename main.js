@@ -1,5 +1,6 @@
 const request = require('request')
 const cheerio = require('cheerio')
+const ytdl = require('ytdl-core')
 const Discord = require('discord.js')
 const secret = require('./secret.json')
 const config = require('./config.json')
@@ -74,6 +75,24 @@ client.on('message', msg => {
       msg.channel.sendMessage("`Sorry, I couldn't get a meme for you ༼ つ ಥ_ಥ ༽つ`")
     })
     msg.channel.stopTyping()
+  }
+  // Testing out music
+  else if (msg.content.toLowerCase() == '!music') {
+    if (msg.member.voiceChannel) {
+      const stream = ytdl('https://www.youtube.com/watch?v=DwN4E3qfTPY', {filter: 'audioonly'})
+      const streamOptions = { seek: 0, volume: 1}
+      msg.member.voiceChannel.join().then(connection => {
+        const dispatcher = connection.playStream(stream, streamOptions)
+        dispatcher.on('error', err => console.log(err))
+        dispatcher.on('debug', info => console.log(info))
+        dispatcher.on('start', () => console.log('stream starting'))
+        dispatcher.on('end', () => connection.channel.leave())
+      })
+        .catch(console.error)
+    } else {
+      console.log('User who called bot was not in voice channel')
+    }
+    msg.delete()
   }
   // Delete airhorn commands 
   else if (config.deleteKeywords.indexOf(msg.content.toLowerCase()) > -1) {
