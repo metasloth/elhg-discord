@@ -79,8 +79,8 @@ client.on('message', msg => {
   // Testing out music
   else if (msg.content.toLowerCase() == '!music') {
     if (msg.member.voiceChannel) {
-      const stream = ytdl('https://www.youtube.com/watch?v=DwN4E3qfTPY', {filter: 'audioonly'})
-      const streamOptions = { seek: 0, volume: 1}
+      const stream = ytdl('https://www.youtube.com/watch?v=Et4Ns2ADrmw', {filter: 'audioonly'})
+      const streamOptions = { seek: 0, volume: 0.5}
       msg.member.voiceChannel.join().then(connection => {
         const dispatcher = connection.playStream(stream, streamOptions)
         dispatcher.on('error', err => console.log(err))
