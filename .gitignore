@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+logs
 
 # Runtime data
 pids
@@ -38,5 +39,8 @@ jspm_packages
 
 # Secret
 secret.json
+
+#Other
 sandbox.js
-log.json
+logs
+data
