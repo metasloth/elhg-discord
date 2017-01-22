@@ -15,6 +15,7 @@
     "discord.js": "^10.0.1",
     "node-opus": "^0.2.4",
     "request": "2.75.0",
+    "sqlite3": "^3.1.8",
     "ytdl-core": "^0.7.19"
   },
   "devDependencies": {
