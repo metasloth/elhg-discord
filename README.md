@@ -10,6 +10,7 @@ A Discord bot for memes and command cleanup, built using [discord.js](https://gi
 * Replace BOT_TOKEN with the "secret" value of your discord app and 
 BOT_LOG_CHANNEL_ID with the id of a text channel for the bot to log its activity.
 * Install the node depencies with `npm install`
+* Verify sqlite3 is installed on your system
 
 ### Adding to Servers
 Edit the following url, replacing BOT_ID with the client id of your discord app:
@@ -18,4 +19,4 @@ https://discordapp.com/oauth2/authorize?client_id=BOT_ID&scope=bot&permissions=0
 ```
 
 ### Running the bot
-Start the bot with `node main.js` or `npm run start`
+The script `startbot.sh` will create the needed directories and log files, as well as start the bot using forever.
